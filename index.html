@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Righteous&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <title>AI Generator</title>
+  </head>
+  <body>
+    <div class="container">
+      <!-- AI Emoji Creator Panel -->
+      <div class="panel" style="grid-column: 1 / -1">
+        <h2 class="panel-title">🤖 AI Emoji Yaratuvchi</h2>
+        <p style="color: var(--accent); margin-bottom: 1rem">
+          O'zingiz hohlagan emoji yarating! Masalan: "happy
+          pizza", "cool cat with sunglasses"
+        </p>
+
+        <div style="display: flex; flex-wrap: wrap; width: 100%; gap: 1rem; margin-bottom: 1.5rem">
+          <input
+            type="text"
+            id="aiPrompt"
+            placeholder="Misol: happy pizza..."
+            style="
+              flex: 1;
+              padding: 1rem;
+              border: 2px solid #ffe8f0;
+              border-radius: 12px;
+              font-size: 1rem;
+            "
+          />
+          <button
+            class="btn-yaratish"
+            id="generateBtn"
+            style="padding: 1rem 2rem; white-space: nowrap"
+          >
+            ✨ Yaratish
+          </button>
+        </div>
+
+        <div
+          id="aiResults"
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+          "
+        ></div>
+
+        <div
+          id="aiLoading"
+          style="display: none; text-align: center; padding: 2rem"
+        >
+          <div style="font-size: 3rem; animation: bounce 1s infinite">🎨</div>
+          <p style="color: var(--accent); font-weight: 600; margin-top: 1rem">
+            AI emoji yaratmoqda...
+          </p>
+        </div>
+      </div>
+      <header>
+        <h1>🎨 Emoji Generator 🎨</h1>
+        <p class="subtitle">
+          O'zingizning ajoyib emoji va stikerlaringizni yarating!
+        </p>
+      </header>
+
+      <div class="main-grid">
+        <!-- Left Panel - Editor -->
+        <div class="panel">
+          <h2 class="panel-title">✨ Emoji Yaratish</h2>
+
+          <div class="canvas-area" id="canvasArea">
+            <div id="mainEmoji">😀</div>
+          </div>
+
+          <div class="control-group">
+            <label>🎭 Kategoriya</label>
+            <select id="categorySelect">
+              <option value="smileys">😀 Yuz ifodalari</option>
+              <option value="animals">🐶 Hayvonlar</option>
+              <option value="food">🍎 Ovqatlar</option>
+              <option value="activities">⚽ Faoliyatlar</option>
+              <option value="objects">💻 Narsalar</option>
+              <option value="symbols">❤️ Belgilar</option>
+              <option value="nature">🌸 Tabiat</option>
+              <option value="travel">🚗 Sayohat</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label>🎨 Fon rangi</label>
+            <input type="color" id="bgColorInput" value="#FFE8F0" />
+          </div>
+
+          <div class="control-group">
+            <label
+              >🔄 Aylanish:
+              <span class="slider-value" id="rotationValue">0°</span></label
+            >
+            <input
+              type="range"
+              id="rotationSlider"
+              min="0"
+              max="360"
+              value="0"
+            />
+          </div>
+
+          <div class="control-group">
+            <label
+              >📏 O'lcham:
+              <span class="slider-value" id="sizeValue">10</span></label
+            >
+            <input
+              type="range"
+              id="sizeSlider"
+              min="3"
+              max="20"
+              value="10"
+              step="0.5"
+            />
+          </div>
+
+          <div class="control-group">
+            <label>🎭 Filtr</label>
+            <select id="filterSelect">
+              <option value="none">Yo'q</option>
+              <option value="brightness(1.3)">☀️ Yorqinroq</option>
+              <option value="brightness(0.7)">🌙 Qorong'iroq</option>
+              <option value="contrast(1.5)">📊 Kontrast</option>
+              <option value="saturate(2)">🎨 To'yingan</option>
+              <option value="grayscale(1)">⚫ Qora-oq</option>
+              <option value="sepia(1)">📜 Sepia</option>
+              <option value="hue-rotate(90deg)">🌈 Rang</option>
+              <option value="blur(2px)">🌫️ Blur</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label>✨ Dekoratsiya</label>
+            <div class="decoration-grid">
+              <button class="decoration-btn" data-decoration="✨">✨</button>
+              <button class="decoration-btn" data-decoration="💫">💫</button>
+              <button class="decoration-btn" data-decoration="🌟">🌟</button>
+              <button class="decoration-btn" data-decoration="⭐">⭐</button>
+              <button class="decoration-btn" data-decoration="💖">💖</button>
+              <button class="decoration-btn" data-decoration="🔥">🔥</button>
+              <button class="decoration-btn" data-decoration="⚡">⚡</button>
+              <button class="decoration-btn" data-decoration="🎉">🎉</button>
+              <button class="decoration-btn" data-decoration="🎊">🎊</button>
+            </div>
+          </div>
+
+          <div class="button-group">
+            <button class="btn btn-primary" id="saveBtn">💾 Saqlash</button>
+            <button class="btn btn-secondary" id="randomBtn">
+              🎲 Tasodifiy
+            </button>
+            <button class="btn btn-secondary" id="resetBtn">🔄 Reset</button>
+          </div>
+        </div>
+
+        <!-- Right Panel - Emoji Selection -->
+        <div class="panel">
+          <h2 class="panel-title">🎯 Emoji Tanlash</h2>
+          <div class="emoji-grid" id="emojiGrid"></div>
+        </div>
+
+        <!-- Gallery Panel -->
+        <div class="panel gallery">
+          <h2 class="panel-title">🖼️ Mening Emojilarim</h2>
+          <div class="button-group">
+            <button class="btn btn-secondary" id="exportBtn">📦 Export</button>
+            <button class="btn btn-secondary" id="importBtn">📥 Import</button>
+            <button class="btn btn-primary" id="clearAllBtn">
+              🗑️ Hammasini o'chirish
+            </button>
+            <button class="btn btn-secondary" id="downloadBtn">
+              ⬇️ Yuklab olish
+            </button>
+          </div>
+          <div class="gallery-grid" id="galleryGrid">
+            <div class="empty-state">
+              Hali emoji yaratilmagan 🎨<br />
+              Yuqorida emoji yarating va saqlang!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
